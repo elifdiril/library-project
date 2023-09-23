@@ -41,10 +41,17 @@ app.post('/add-book', async(req, res) => {
       }
 })
 
-app.get('/books', async(req, res) => {
+app.get('/books', (req, res) => {
     try {
-        const books = await BookStore.find();
-        res.status(200).json(books);
+        BookStore.find().then(books => res.json(books));
+      } catch (err) {
+        res.send(err);
+      }
+})
+
+app.delete('/delete-book/:id', (req, res) => {
+    try {
+        BookStore.findByIdAndDelete(req.params.id).then(book => res.json(book));
       } catch (err) {
         res.send(err);
       }
