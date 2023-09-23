@@ -32,6 +32,7 @@ app.post('/add-book', async(req, res) => {
             author: req.body.author,
             description: req.body.description,
             quantity: req.body.quantity,
+            department: req.body.department,
             comments: req.body.comments
         });
         const book = await newBook.save();

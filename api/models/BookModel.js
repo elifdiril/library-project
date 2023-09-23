@@ -17,6 +17,10 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    department: {
+        type: String,
+        required: true
+    },
     comments: {
         type: String,
         required: false
