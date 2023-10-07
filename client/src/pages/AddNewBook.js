@@ -1,5 +1,7 @@
-import React from 'react';
-import { Button, Form, Input, InputNumber, Select } from 'antd';
+import React from "react";
+import { Button, Form, Input, InputNumber, Select, message } from "antd";
+import axios from "axios";
+
 const layout = {
   labelCol: {
     span: 8,
@@ -11,23 +13,37 @@ const layout = {
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
-  required: '${label} is required!',
+  required: "${label} is required!",
   types: {
-    email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
+    email: "${label} is not a valid email!",
+    number: "${label} is not a valid number!",
   },
   number: {
-    range: '${label} must be between ${min} and ${max}',
+    range: "${label} must be between ${min} and ${max}",
   },
 };
 /* eslint-enable no-template-curly-in-string */
 
-const onFinish = (values) => {
-  console.log(values);
-};
-const AddNewBook = () => (
+const AddNewBook = () => {
+  const [form] = Form.useForm();
+  const onFinish = (values) => {
+    axios
+      .post("/add-book", values.book)
+      .then((res) => {
+        message.success("Book added successfully");
+      })
+      .catch((err) => {
+        message.error(err);
+      })
+      .finally(() => {
+        form.resetFields();
+      });
+  };
+
+  return(
   <Form
     {...layout}
+    form={form}
     name="nest-messages"
     onFinish={onFinish}
     style={{
@@ -36,7 +52,7 @@ const AddNewBook = () => (
     validateMessages={validateMessages}
   >
     <Form.Item
-      name={['book', 'title']}
+      name={["book", "title"]}
       label="Title"
       rules={[
         {
@@ -47,7 +63,7 @@ const AddNewBook = () => (
       <Input />
     </Form.Item>
     <Form.Item
-      name={['book', 'Author']}
+      name={["book", "author"]}
       label="Author"
       rules={[
         {
@@ -58,7 +74,7 @@ const AddNewBook = () => (
       <Input />
     </Form.Item>
     <Form.Item
-      name={['book', 'Description']}
+      name={["book", "description"]}
       label="Description"
       rules={[
         {
@@ -69,12 +85,12 @@ const AddNewBook = () => (
       <Input />
     </Form.Item>
     <Form.Item
-      name={['book', 'Quantity']}
+      name={["book", "quantity"]}
       label="Quantity"
       rules={[
         {
           required: true,
-          type: 'number',
+          type: "number",
           min: 0,
         },
       ]}
@@ -82,7 +98,7 @@ const AddNewBook = () => (
       <InputNumber />
     </Form.Item>
     <Form.Item
-      name={['book', 'Department']}
+      name={["book", "department"]}
       label="Department"
       rules={[
         {
@@ -91,22 +107,23 @@ const AddNewBook = () => (
       ]}
     >
       <Select
-      style={{
-        width: 120,
-      }}
-      options={[
-        {
-          value: 'music',
-          label: 'Music',
-        },{
-          value: 'study',
-          label: 'Study',
-        },
-      ]}
-    />
+        style={{
+          width: 120,
+        }}
+        options={[
+          {
+            value: "music",
+            label: "Music",
+          },
+          {
+            value: "study",
+            label: "Study",
+          },
+        ]}
+      />
     </Form.Item>
     <Form.Item
-      name={['book', 'Comments']}
+      name={["book", "comments"]}
       label="Comments"
       rules={[
         {
@@ -118,15 +135,17 @@ const AddNewBook = () => (
     </Form.Item>
     <Form.Item
       wrapperCol={{
-        ...layout.wrapperCol,
         offset: 8,
         span: 16,
       }}
     >
       <Button type="primary" htmlType="submit">
         Submit
+      </Button>{' '}
+      <Button type="default" htmlType="button" onClick={() => form.resetFields()}>
+        Reset Fields
       </Button>
     </Form.Item>
-  </Form>
-);
+  </Form>);
+};
 export default AddNewBook;

@@ -1,9 +1,22 @@
 import React from "react";
-import { Space, Table } from "antd";
+import { Space, Table, message } from "antd";
+import axios from "axios";
 const { Column, ColumnGroup } = Table;
 
-const BookList = ({books}) => (
-  <Table dataSource={books} size="middle" style={{ width: "80%" , margin: "auto"}} >
+const BookList = ({ books }) => {
+  const deleteBook = (id) => {
+    axios.delete(`/delete-book/${id}`).then(() => {
+      message.success("Book deleted successfully");
+    }).catch((err) => {
+      message.error(err);
+    })
+  }
+
+  return(<Table
+    dataSource={books}
+    size="middle"
+    style={{ width: "80%", margin: "auto" }}
+  >
     <Column title="Id" dataIndex="_id" key="_id" />
     <ColumnGroup title="Name">
       <Column title="Title" dataIndex="title" key="title" />
@@ -15,14 +28,14 @@ const BookList = ({books}) => (
     <Column
       title="Action"
       key="action"
-      render={() => (
+      render={(row) => (
         <Space size="middle">
-          <a>Delete</a>
+          <a onClick={() => deleteBook(row._id)}>Delete</a>
           <a>Lend</a>
           <a>Return</a>
         </Space>
       )}
     />
-  </Table>
-);
+  </Table>)
+};
 export default BookList;
