@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Input, InputNumber, Select, message } from "antd";
-import axios from "axios";
+import useBook from "../hooks/useBook";
 
 const layout = {
   labelCol: {
@@ -26,18 +26,10 @@ const validateMessages = {
 
 const AddNewBook = () => {
   const [form] = Form.useForm();
+  const {addBook} = useBook();
   const onFinish = (values) => {
-    axios
-      .post("/add-book", values.book)
-      .then((res) => {
-        message.success("Book added successfully");
-      })
-      .catch((err) => {
-        message.error(err);
-      })
-      .finally(() => {
-        form.resetFields();
-      });
+    addBook(values.book);
+    form.resetFields();
   };
 
   return(

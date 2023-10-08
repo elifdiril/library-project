@@ -1,15 +1,25 @@
 import React from "react";
 import { Space, Table, message } from "antd";
-import axios from "axios";
+import useBook from "../hooks/useBook";
 const { Column, ColumnGroup } = Table;
 
-const BookList = ({ books }) => {
+const BookList = () => {
+  const { books, updateBook, removeBook } = useBook();
+
   const deleteBook = (id) => {
-    axios.delete(`/delete-book/${id}`).then(() => {
-      message.success("Book deleted successfully");
-    }).catch((err) => {
-      message.error(err);
-    })
+    removeBook(id);
+  }
+
+  const lendBook = (book) => {
+    if (book.quantity === 0) {
+      message.error("Book is out of stock");
+    } else {
+      updateBook(book._id, {quantity : book.quantity - 1});
+    }
+  }
+
+  const returnBook = (book) => {
+    updateBook(book._id, {quantity : book.quantity + 1})
   }
 
   return(<Table
@@ -31,8 +41,8 @@ const BookList = ({ books }) => {
       render={(row) => (
         <Space size="middle">
           <a onClick={() => deleteBook(row._id)}>Delete</a>
-          <a>Lend</a>
-          <a>Return</a>
+          <a onClick={() => lendBook(row)}>Lend</a>
+          <a onClick={() => returnBook(row)}>Return</a>
         </Space>
       )}
     />
