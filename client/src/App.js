@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { MenuUnfoldOutlined, BookOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-import { redirect } from "react-router-dom";
-import AddNewBook from "./pages/AddNewBook";
-import BookList from "./pages/BookList";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -25,31 +23,25 @@ const items = [
   ]),
 ];
 const App = () => {
-  const [selectedBook, setSelectedBook] = useState(null);
   const [current, setCurrent] = useState("1");
-  const queryClient = new QueryClient();
+  const navigate = useNavigate();
 
   const onClick = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
-    redirect(e.key);
+    navigate(e.key);
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Menu
-        onClick={onClick}
-        style={{
-          width: 256,
-        }}
-        defaultOpenKeys={["books"]}
-        selectedKeys={[current]}
-        mode="inline"
-        items={items}
-      />
-      <AddNewBook />
-      <BookList setSelectedBook={setSelectedBook} />
-    </QueryClientProvider>
+    <Menu
+      onClick={onClick}
+      style={{
+        width: 200,
+      }}
+      defaultOpenKeys={["books"]}
+      selectedKeys={[current]}
+      mode="inline"
+      items={items}
+    />
   );
 };
 export default App;

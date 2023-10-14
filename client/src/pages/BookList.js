@@ -25,7 +25,7 @@ const BookList = () => {
   return(<Table
     dataSource={books}
     size="middle"
-    style={{ width: "80%", margin: "auto" }}
+    style={{ width: "60%", margin: "auto", marginTop: "20px" }}
   >
     <Column title="Id" dataIndex="_id" key="_id" />
     <ColumnGroup title="Name">

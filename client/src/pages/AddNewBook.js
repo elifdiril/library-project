@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, InputNumber, Select, message } from "antd";
+import { Button, Form, Input, InputNumber, Select } from "antd";
 import useBook from "../hooks/useBook";
 
 const layout = {
@@ -26,118 +26,124 @@ const validateMessages = {
 
 const AddNewBook = () => {
   const [form] = Form.useForm();
-  const {addBook} = useBook();
+  const { addBook } = useBook();
   const onFinish = (values) => {
     addBook(values.book);
     form.resetFields();
   };
 
-  return(
-  <Form
-    {...layout}
-    form={form}
-    name="nest-messages"
-    onFinish={onFinish}
-    style={{
-      maxWidth: 600,
-    }}
-    validateMessages={validateMessages}
-  >
-    <Form.Item
-      name={["book", "title"]}
-      label="Title"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-    <Form.Item
-      name={["book", "author"]}
-      label="Author"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-    <Form.Item
-      name={["book", "description"]}
-      label="Description"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-    <Form.Item
-      name={["book", "quantity"]}
-      label="Quantity"
-      rules={[
-        {
-          required: true,
-          type: "number",
-          min: 0,
-        },
-      ]}
-    >
-      <InputNumber />
-    </Form.Item>
-    <Form.Item
-      name={["book", "department"]}
-      label="Department"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
-    >
-      <Select
-        style={{
-          width: 120,
-        }}
-        options={[
-          {
-            value: "music",
-            label: "Music",
-          },
-          {
-            value: "study",
-            label: "Study",
-          },
-        ]}
-      />
-    </Form.Item>
-    <Form.Item
-      name={["book", "comments"]}
-      label="Comments"
-      rules={[
-        {
-          required: false,
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-    <Form.Item
-      wrapperCol={{
-        offset: 8,
-        span: 16,
-      }}
-    >
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>{' '}
-      <Button type="default" htmlType="button" onClick={() => form.resetFields()}>
-        Reset Fields
-      </Button>
-    </Form.Item>
-  </Form>);
+  return (
+    <div style={{ border: "1px solid #B0578D", padding: "20px", paddingLeft: "0",backgroundColor: "#D988B9", borderRadius: "15px", margin: "auto", marginTop: "20px" }}>
+      <h1 style={{ color: "white", textAlign: "center" }}>ADD NEW BOOK</h1>
+      <Form
+        {...layout}
+        form={form}
+        name="nest-messages"
+        onFinish={onFinish}
+        style={{ width: 500}}
+        validateMessages={validateMessages}
+      >
+        <Form.Item
+          name={["book", "title"]}
+          label="Title"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name={["book", "author"]}
+          label="Author"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name={["book", "description"]}
+          label="Description"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name={["book", "quantity"]}
+          label="Quantity"
+          rules={[
+            {
+              required: true,
+              type: "number",
+              min: 0,
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
+          name={["book", "department"]}
+          label="Department"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Select
+            style={{
+              width: 120,
+            }}
+            options={[
+              {
+                value: "music",
+                label: "Music",
+              },
+              {
+                value: "study",
+                label: "Study",
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item
+          name={["book", "comments"]}
+          label="Comments"
+          rules={[
+            {
+              required: false,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>{" "}
+          <Button
+            type="default"
+            htmlType="button"
+            onClick={() => form.resetFields()}
+          >
+            Reset Fields
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
+  );
 };
 export default AddNewBook;
