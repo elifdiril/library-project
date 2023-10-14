@@ -2,11 +2,12 @@ import { message } from "antd";
 import axios from "axios";
 
 export const getAllBooks = async () => {
-  const { data } = await axios.get("/books").catch((err) => {
-    message.error(err);
-  });
-
-  return data;
+  try {
+    const { data } = await axios.get("/books");
+    return data;
+  } catch (error) {
+    message.error(error);
+  }
 };
 
 export const addBookQuery = async (book) => {
@@ -21,11 +22,19 @@ export const addBookQuery = async (book) => {
 };
 
 export const deleteBook = async (id) => {
-  axios.delete(`/delete-book/${id}`).then(() => {
+  try {
+    axios.delete(`/delete-book/${id}`);
     message.success("Book deleted successfully");
-  });
+  } catch (error) {
+   message.error(error); 
+  }
 };
 
 export const updateBookQuery = async (book) => {
-  axios.put(`/update-book/${book._id}`, book);
+  try {
+    axios.put(`/update-book/${book._id}`, book);
+    message.success("Book updated successfully");
+  } catch (error) {
+    message.error(error); 
+  }
 };
