@@ -2,23 +2,22 @@ import { message } from "antd";
 import axios from "axios";
 
 export const getAllBooks = async () => {
-  const {data} = await axios
-    .get("/books")
-    .catch((err) => {
-      message.error(err);
-    });
+  const { data } = await axios.get("/books").catch((err) => {
+    message.error(err);
+  });
 
-    return data;
+  return data;
 };
 
 export const addBookQuery = async (book) => {
-  const { data } = await axios
-    .post("/add-book", book)
-    .catch((err) => {
-      message.error(err);
-    });
+  try {
+    const { data } = await axios.post("/add-book", book);
+    message.success("Book added successfully");
 
     return data;
+  } catch (err) {
+    message.error(err);
+  }
 };
 
 export const deleteBook = async (id) => {
