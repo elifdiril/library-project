@@ -16,7 +16,7 @@ root.render(
       <div className="container">
         <App />
         <Routes>
-          <Route path="/" element={<BookList />} />
+          <Route exact path="/" element={<BookList />} />
           <Route path="/books" element={<BookList />} />
           <Route path="/add-book" element={<AddNewBook />} />
         </Routes>
