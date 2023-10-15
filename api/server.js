@@ -19,7 +19,7 @@ app.get('/news', (req, res) => {
 });*/
 
 // mongoose connection
-mongoose.connect('mongodb+srv://elif:test123@cluster0.ehz8iuk.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
+mongoose.connect('mongodb+srv://username:pw@cluster0.ehz8iuk.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
     console.log('Connected to DB');
 }).catch((err) => {
     console.log(err);
@@ -57,6 +57,16 @@ app.delete('/delete-book/:id', (req, res) => {
         res.send(err);
       }
 })
+
+app.get("/books/:type", (req, res) => {
+  try {
+    BookStore.find({ department: req.params.type }).then((books) =>
+      res.json(books)
+    );
+  } catch (err) {
+    res.send(err);
+  }
+});
 
 app.listen(5000, () => {
     console.log('Server is running on port 5000');

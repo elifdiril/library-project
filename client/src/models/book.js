@@ -26,7 +26,7 @@ export const deleteBook = async (id) => {
     axios.delete(`/delete-book/${id}`);
     message.success("Book deleted successfully");
   } catch (error) {
-   message.error(error); 
+    message.error(error);
   }
 };
 
@@ -35,6 +35,15 @@ export const updateBookQuery = async (book) => {
     axios.put(`/update-book/${book._id}`, book);
     message.success("Book updated successfully");
   } catch (error) {
-    message.error(error); 
+    message.error(error);
+  }
+};
+
+export const getBooksByType = async (type) => {
+  try {
+    const { data } = await axios.get(`/books/${type}`);
+    return data;
+  } catch (error) {
+    message.error(error);
   }
 };

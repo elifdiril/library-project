@@ -1,12 +1,20 @@
 import { useQueryClient } from "@tanstack/react-query";
 import useBookQuery from "./useBookQuery";
 import { useState } from "react";
-import { updateBookQuery, deleteBook, addBookQuery } from "../models/book";
+import { updateBookQuery, deleteBook, addBookQuery, getBooksByType, getAllBooks } from "../models/book";
 
 const useBook = () => {
   const queryClient = useQueryClient();
   const { isLoading, data: books } = useBookQuery();
   const [isFetching, setIsFetching] = useState();
+
+  const getAllBookList = async () => {
+    setIsFetching(true);
+    const data = await getAllBooks();
+    queryClient.setQueryData(["books"], data);
+    setIsFetching(false);
+    return data;
+  };
 
   const addBook = async (book) => {
     setIsFetching(true);
@@ -39,12 +47,22 @@ const useBook = () => {
     setIsFetching(false);
   };
 
+  const gettingBooksByType = async (type) => {
+    setIsFetching(true);
+    const booksByType = await getBooksByType(type);
+    queryClient.setQueryData(["books"], booksByType);
+    setIsFetching(false);
+    return booksByType;
+  };
+
   return {
     isLoading,
+    getAllBookList,
     books,
     addBook,
     updateBook,
     removeBook,
+    gettingBooksByType,
     isFetching,
   };
 };

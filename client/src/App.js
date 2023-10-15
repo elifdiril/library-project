@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MenuUnfoldOutlined, BookOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
+import useIsMobile from "./hooks/useIsMobile";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -17,14 +18,15 @@ const items = [
     getItem("Book List", "/books"),
     getItem("Add New Book", "/add-book"),
     getItem("Departments", "/departments", <BookOutlined />, [
-      getItem("Music", "/music"),
-      getItem("Study", "/study"),
+      getItem("Music", "/books/music"),
+      getItem("Study", "/books/study"),
     ]),
   ]),
 ];
 const App = () => {
   const [current, setCurrent] = useState("1");
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -34,9 +36,7 @@ const App = () => {
   return (
     <Menu
       onClick={onClick}
-      style={{
-        width: 200,
-      }}
+      style={{ width: `${isMobile ? "150px" : "200px"}`}}
       defaultOpenKeys={["books"]}
       selectedKeys={[current]}
       mode="inline"

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import useBook from "../hooks/useBook";
+import useIsMobile from "../hooks/useIsMobile";
 
 const layout = {
   labelCol: {
@@ -27,6 +28,8 @@ const validateMessages = {
 const AddNewBook = () => {
   const [form] = Form.useForm();
   const { addBook } = useBook();
+  const isMobile = useIsMobile();
+
   const onFinish = (values) => {
     addBook(values.book);
     form.resetFields();
@@ -40,7 +43,7 @@ const AddNewBook = () => {
         form={form}
         name="nest-messages"
         onFinish={onFinish}
-        style={{ width: 500}}
+        style={{ width: `${isMobile ? "320px" : "600px"}`}}
         validateMessages={validateMessages}
       >
         <Form.Item
